@@ -13,20 +13,27 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', apiRoutes(io));
 
+const reactDist = path.join(__dirname, 'client', 'dist');
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(reactDist));
+}
+
 app.get('/', (req, res) => {
+  if (process.env.NODE_ENV === 'production') return res.sendFile(path.join(reactDist, 'index.html'));
   res.redirect('/dashboard');
 });
 
 app.get('/dashboard', async (req, res) => {
+  if (process.env.NODE_ENV === 'production') {
+    return res.sendFile(path.join(reactDist, 'index.html'));
+  }
   const Panel = require('./models/Panel');
   const Ticket = require('./models/Ticket');
   const Transcript = require('./models/Transcript');
@@ -39,6 +46,9 @@ app.get('/dashboard', async (req, res) => {
 });
 
 app.get('/transcript/:id', async (req, res) => {
+  if (process.env.NODE_ENV === 'production') {
+    return res.redirect('/dashboard');
+  }
   const Transcript = require('./models/Transcript');
   const t = await Transcript.findById(req.params.id).lean();
   if (!t) return res.status(404).send('Transcript not found');

@@ -12,10 +12,16 @@ A production-ready ticket system with Discord bot + web dashboard.
 
 ## Quick Start
 1. Copy `.env.example` to `.env` and fill in your values.
-2. Run `npm install`.
+2. Run `npm install` and `cd client && npm install`.
 3. Start MongoDB.
-4. Run `npm run dev`.
-5. Open: `http://localhost:3000/dashboard`
+4. In development, run `npm run dev` in root and in another terminal `cd client && npm run dev`.
+5. For production build: `npm run build` then `npm start`.
+6. Open: `http://localhost:3000/dashboard`
+
+## Docker
+1. Ensure `.env` has valid values.
+2. Run `docker compose up --build`.
+3. Visit `http://localhost:3000`.
 
 ## Environment Variables (.env)
 ```txt

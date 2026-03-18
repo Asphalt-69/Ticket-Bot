@@ -10,13 +10,13 @@
   <div class="app">
     <aside class="sidebar"><h1>TicketBot</h1><nav><a href="/dashboard">Dashboard</a><a href="/dashboard">Panels</a><a href="/dashboard">Tickets</a><a href="/dashboard">Logs</a></nav></aside>
     <main>
-      <header><h2>Dashboard (Made by asphalt._,6)</h2><span class="status"><b>Bot:</b> <%= botReady ? 'Online' : 'Starting...' %></span></header>
+      <header><div><h2>Ticket Control Center</h2><p style="margin:4px 0;color:#94a3b8;">Premium ticket dashboard built by asphalt._,6</p></div><span class="status"><b>Bot:</b> <%= botReady ? 'Online' : 'Starting...' %></span></header>
       <section class="card-grid">
-      <article class="card"><h3>Panels</h3><ul id="panels-list"><% panels.forEach(p=> { %><li><%= p.name %> | <%= p.type %> | <%= p.uiType %> | category <%= p.categoryId %> | merged <%= p.mergedGroup || 'none' %></li><% }) %></ul></article>
-      <article class="card"><h3>Open Tickets</h3><ul><% tickets.forEach(t=> { %><li><%= t.channelName || t.channelId %> by <%= t.username %> claimed <%= t.claimerTag || 'none' %></li><% }) %></ul></article>
-      <article class="card"><h3>Recent Logs</h3><ul><% logs.forEach(l=> { %><li>[<%= new Date(l.createdAt).toLocaleString() %>] <%= l.action %> - <%= l.details %></li><% }) %></ul></article>
-    </section>
-    <section class="card"><h3>Create Panel</h3>
+        <article class="card"><h3>Quick Stats</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;"><div style="background:#111827;border-radius:10px;padding:.7rem;"><strong><%= panels.length %></strong><br><small>Panels</small></div><div style="background:#111827;border-radius:10px;padding:.7rem;"><strong><%= tickets.length %></strong><br><small>Open Tickets</small></div></div></article>
+        <article class="card"><h3>Recent Logs</h3><ul><% logs.slice(0,5).forEach(l=> { %><li>[<%= new Date(l.createdAt).toLocaleTimeString() %>] <%= l.action %> - <%= l.details %></li><% }) %></ul></article>
+        <article class="card"><h3>Panels</h3><ul id="panels-list"><% panels.forEach(p=> { %><li><strong><%= p.name %></strong> &bull; <%= p.type %> &bull; <%= p.uiType %> &bull; <%= p.mergedGroup || 'No group' %></li><% }) %></ul></article>
+      </section>
+      <section class="card"><h3>Create Panel</h3>
       <form id="panel-form" class="panel-form">
         <input name="panelName" placeholder="Panel Name" required />
         <input name="categoryId" placeholder="Category ID" required />
@@ -30,7 +30,8 @@
         <button type="submit">Create Panel</button>
       </form>
     </section>
-    <section class="card"><h3>Recent Transcripts</h3><ul><% transcripts.forEach(t=> { %><li><a href="/transcript/<%= t._id %>">Transcript <%= t._id %></a> for channel <%= t.channelId %></li><% }) %></ul></section>
+    <section class="card"><h3>Recent Transcripts</h3><ul><% transcripts.forEach(t=> { %><li><a style="color:#c4b5fd;" href="/transcript/<%= t._id %>">Transcript <%= t._id %></a> for <code><%= t.channelId %></code></li><% }) %></ul></section>
+    <div class="footer">Made with ❤️ by asphalt._,6</div>
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <script src="/js/dashboard.js"></script>
     </main>
