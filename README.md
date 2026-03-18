@@ -11,17 +11,17 @@ A production-ready ticket system with Discord bot + web dashboard.
 - Ticket logs + analytics
 
 ## Quick Start
-1. Copy `.env.example` to `.env` and fill in your values.
-2. Run `npm install` and `cd client && npm install`.
-3. Start MongoDB.
-4. In development, run `npm run dev` in root and in another terminal `cd client && npm run dev`.
-5. For production build: `npm run build` then `npm start`.
-6. Open: `http://localhost:3000/dashboard`
+1. Copy `.env.example` to `.env` and fill in your values (especially `DISCORD_TOKEN`, `MONGODB_URI`, `GUILD_ID`, and `ADMIN_ROLE_ID`).
+2. Run `npm install` in root and `cd client && npm install`.
+3. Start MongoDB (or use the in-memory fallback for dev without DB).
+4. In development, run `PORT=4000 npm run dev` in root (this starts backend + frontend via concurrently).
+5. Open frontend at `http://localhost:5173` and backend dashboard at `http://localhost:4000/dashboard`.
+6. For production build: `npm run build` then `PORT=4000 npm start`.
 
 ## Docker
-1. Ensure `.env` has valid values.
+1. Ensure `.env` has valid values (Discord bot token and Mongo URI).
 2. Run `docker compose up --build`.
-3. Visit `http://localhost:3000`.
+3. Visit `http://localhost:4000`.
 
 ## Environment Variables (.env)
 ```txt
