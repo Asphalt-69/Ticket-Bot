@@ -1,0 +1,19 @@
+:root{--bg:#0f172a;--panel:#111827;--text:#e2e8f0;--muted:#94a3b8;--accent:#22c55e;}
+*{box-sizing:border-box;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;}
+body{margin:0;background:var(--bg);color:var(--text);}
+.app{display:grid;grid-template-columns:220px 1fr;min-height:100vh;}
+.sidebar{background:#111827;padding:16px;}
+.sidebar h1{margin:0 0 16px;color:#fff;}
+.sidebar nav a{display:block;color:#cbd5e1;text-decoration:none;padding:8px; border-radius:6px; margin-bottom:4px;}
+.sidebar nav a:hover{background:#1f2937;}
+main{padding:20px;}
+header{display:flex;justify-content:space-between;align-items:center;}
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;}
+.card{background:var(--panel);padding:12px;border-radius:10px;}
+.status{color:#a7f3d0;}
+ul{margin:0;padding-left:18px;}
+.panel-form{display:grid;gap:8px;margin-top:8px;}
+.panel-form input,.panel-form select{padding:8px;border-radius:6px;border:1px solid #374151;background:#0f172a;color:#fff;}
+.panel-form button{border:none;padding:10px;background:#22c55e;color:#111;border-radius:6px;cursor:pointer;}
+.panel-form button:hover{background:#16a34a;}
+</style>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ticket Bot Dashboard</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar"><h1>TicketBot</h1><nav><a href="/dashboard">Dashboard</a><a href="/dashboard">Panels</a><a href="/dashboard">Tickets</a><a href="/dashboard">Logs</a></nav></aside>
+    <main>
+      <header><h2>Dashboard (Made by asphalt._,6)</h2><span class="status"><b>Bot:</b> <%= botReady ? 'Online' : 'Starting...' %></span></header>
+      <section class="card-grid">
+      <article class="card"><h3>Panels</h3><ul id="panels-list"><% panels.forEach(p=> { %><li><%= p.name %> | <%= p.type %> | <%= p.uiType %> | category <%= p.categoryId %> | merged <%= p.mergedGroup || 'none' %></li><% }) %></ul></article>
+      <article class="card"><h3>Open Tickets</h3><ul><% tickets.forEach(t=> { %><li><%= t.channelName || t.channelId %> by <%= t.username %> claimed <%= t.claimerTag || 'none' %></li><% }) %></ul></article>
+      <article class="card"><h3>Recent Logs</h3><ul><% logs.forEach(l=> { %><li>[<%= new Date(l.createdAt).toLocaleString() %>] <%= l.action %> - <%= l.details %></li><% }) %></ul></article>
+    </section>
+    <section class="card"><h3>Create Panel</h3>
+      <form id="panel-form" class="panel-form">
+        <input name="panelName" placeholder="Panel Name" required />
+        <input name="categoryId" placeholder="Category ID" required />
+        <input name="roles" placeholder="Role IDs comma-separated" required />
+        <select name="panelType"><option value="individual">Individual</option><option value="merged">Merged</option></select>
+        <input name="mergedGroup" placeholder="Merged Group (optional)" />
+        <select name="uiType"><option value="button">Button</option><option value="dropdown">Dropdown</option></select>
+        <input name="embedTitle" placeholder="Embed Title" value="Open Ticket" />
+        <input name="embedDescription" placeholder="Embed Description" value="Create your support ticket" />
+        <input name="embedColor" placeholder="Embed Color" value="#00FF00" />
+        <button type="submit">Create Panel</button>
+      </form>
+    </section>
+    <section class="card"><h3>Recent Transcripts</h3><ul><% transcripts.forEach(t=> { %><li><a href="/transcript/<%= t._id %>">Transcript <%= t._id %></a> for channel <%= t.channelId %></li><% }) %></ul></section>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="/js/dashboard.js"></script>
+    </main>
+  </div>
+</body>
+</html>
