@@ -69,8 +69,12 @@ client.on(Events.ClientReady, () => {
   client.ready = true;
 });
 
-client.login(process.env.DISCORD_TOKEN).catch(err => {
-  console.error('Discord login failed:', err);
-});
+if (!process.env.DISCORD_TOKEN) {
+  console.warn('⚠️ DISCORD_TOKEN not set. Bot login skipped for local dashboard preview.');
+} else {
+  client.login(process.env.DISCORD_TOKEN).catch(err => {
+    console.error('Discord login failed:', err);
+  });
+}
 
 module.exports = client;

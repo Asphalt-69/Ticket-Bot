@@ -55,17 +55,28 @@ app.get('/transcript/:id', async (req, res) => {
   res.render('transcript', { transcript: t });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/ticketbot').then(() => {
-  console.log('✅ MongoDB connected');
-  server.listen(PORT, () => {
-    console.log(`🚀 Web dashboard running at http://localhost:${PORT}`);
+async function startServer() {
+  let mongoUri = process.env.MONGODB_URI;
+  if (!mongoUri) {
+    console.log('⚠️ No MongoDB URI configured, starting in-memory MongoDB for demo');
+    const { MongoMemoryServer } = require('mongodb-memory-server');
+    const mongod = await MongoMemoryServer.create();
+    mongoUri = mongod.getUri();
+  }
+  mongoose.connect(mongoUri).then(() => {
+    console.log('✅ MongoDB connected');
+    server.listen(PORT, () => {
+      console.log(`🚀 Web dashboard running at http://localhost:${PORT}`);
+    });
+  }).catch(err => {
+    console.error('❌ MongoDB connection failed', err);
+    process.exit(1);
   });
-}).catch(err => {
-  console.error('❌ MongoDB connection failed', err);
-  process.exit(1);
-});
+}
+
+startServer();
 
 io.on('connection', (socket) => {
   console.log('Socket connected:', socket.id);
